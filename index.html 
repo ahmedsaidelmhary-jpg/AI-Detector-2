@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>AI DETECTOR PRO - كشف النصوص بالذكاء الاصطناعي</title>
+    
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts - Cairo -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <!-- ملف CSS الرئيسي -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- الخلفية المتحركة ثلاثية الأبعاد -->
+    <div class="animated-bg">
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+        <div class="gradient-orb orb-3"></div>
+        <div class="gradient-orb orb-4"></div>
+        <div class="gradient-orb orb-5"></div>
+        <div class="particles" id="particles"></div>
+        <div class="noise-overlay"></div>
+        <div class="grid-overlay"></div>
+        <div class="scan-line"></div>
+    </div>
+
+    <!-- الحاوية الرئيسية -->
+    <div class="container">
+        <!-- الهيدر -->
+        <header class="main-header" data-aos="fade-down" data-aos-duration="1000">
+            <div class="logo-wrapper">
+                <div class="logo-3d">
+                    <div class="logo-face front">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <div class="logo-face back">
+                        <i class="fas fa-microchip"></i>
+                    </div>
+                    <div class="logo-face right">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <div class="logo-face left">
+                        <i class="fas fa-code"></i>
+                    </div>
+                </div>
+                <h1 class="main-title">
+                    <span class="title-ai">AI</span>
+                    <span class="title-detector">DETECTOR</span>
+                    <span class="title-pro">PRO</span>
+                </h1>
+            </div>
+            <div class="subtitle-wrapper">
+                <p class="subtitle">
+                    <i class="fas fa-bolt"></i>
+                    <span>كشف النصوص المكتوبة بالذكاء الاصطناعي بدقة 99.9%</span>
+                    <i class="fas fa-bolt"></i>
+                </p>
+                <div class="trust-badge">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>معتمد من أكثر من 50,000 مستخدم</span>
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+            </div>
+        </header>
+
+        <!-- شريط الإحصائيات -->
+        <div class="stats-panel" data-aos="fade-up" data-aos-duration="800">
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <div class="stat-info">
+                    <span class="stat-value" id="totalScans">1,247,893</span>
+                    <span class="stat-label">إجمالي التحاليل</span>
+                </div>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <div class="stat-info">
+                    <span class="stat-value" id="aiDetected">823,456</span>
+                    <span class="stat-label">نصوص AI</span>
+                </div>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-user-check"></i>
+                </div>
+                <div class="stat-info">
+                    <span class="stat-value" id="activeUsers">50,234</span>
+                    <span class="stat-label">مستخدم نشط</span>
+                </div>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-star"></i>
+                </div>
+                <div class="stat-info">
+                    <span class="stat-value">4.9</span>
+                    <span class="stat-label">التقييم</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- شريط الرصيد -->
+        <div class="balance-panel" data-aos="fade-up" data-aos-duration="800">
+            <div class="balance-content">
+                <div class="balance-left">
+                    <div class="balance-icon">
+                        <i class="fas fa-coins"></i>
+                    </div>
+                    <div class="balance-details">
+                        <span class="balance-label">الرصيد المجاني اليوم</span>
+                        <div class="balance-progress">
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="progressFill" style="width: 100%"></div>
+                            </div>
+                            <div class="balance-numbers">
+                                <span class="current-balance" id="balanceAmount">5</span>
+                                <span class="separator">/</span>
+                                <span class="max-balance">5</span>
+                                <span class="balance-unit">تحاليل</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="balance-right">
+                    <button class="upgrade-btn" id="upgradeBtn">
+                        <i class="fas fa-crown"></i>
+                        <span>ترقية إلى غير محدود</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- بطاقة الإدخال الرئيسية -->
+        <div class="main-card" data-aos="zoom-in" data-aos-duration="1000">
+            <div class="card-header">
+                <div class="header-tabs">
+                    <button class="tab-btn active" data-tab="text">
+                        <i class="fas fa-pen-fancy"></i>
+                        <span>نص مباشر</span>
+                    </button>
+                    <button class="tab-btn" data-tab="file">
+                        <i class="fas fa-file-upload"></i>
+                        <span>رفع ملف</span>
+                    </button>
+                    <button class="tab-btn" data-tab="url">
+                        <i class="fas fa-link"></i>
+                        <span>رابط</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="card-body">
+                <!-- تبويب النص المباشر -->
+                <div class="tab-pane active" id="textTab">
+                    <div class="input-wrapper">
+                        <textarea 
+                            id="textInput" 
+                            class="text-input" 
+                            placeholder="اكتب أو الصق النص هنا للتحليل..."
+                            maxlength="10000"
+                        ></textarea>
+                        <div class="input-tools">
+                            <div class="word-counter">
+                                <i class="fas fa-chart-simple"></i>
+                                <span id="wordCount">0</span>
+                                <span>كلمة</span>
+                                <span class="counter-divider">|</span>
+                                <span id="charCount">0</span>
+                                <span>حرف</span>
+                            </div>
+                            <div class="tool-buttons">
+                                <button class="tool-btn" id="pasteBtn" title="لصق">
+                                    <i class="fas fa-paste"></i>
+                                </button>
+                                <button class="tool-btn" id="clearBtn" title="مسح">
+                                    <i class="fas fa-trash-can"></i>
+                                </button>
+                                <button class="tool-btn" id="exampleBtn" title="نص تجريبي">
+                                    <i class="fas fa-file-lines"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- تبويب رفع الملف -->
+                <div class="tab-pane" id="fileTab">
+                    <div class="upload-area" id="uploadArea">
+                        <input type="file" id="fileInput" accept=".txt,.doc,.docx,.pdf" class="file-input">
+                        <div class="upload-content">
+                            <div class="upload-icon">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                            </div>
+                            <p class="upload-text">اسحب الملف هنا أو اضغط للرفع</p>
+                            <p class="upload-hint">
+                                <i class="fas fa-file"></i> TXT, DOC, DOCX, PDF
+                                <i class="fas fa-weight-hanging"></i> حتى 10MB
+                            </p>
+                        </div>
+                    </div>
+                    <div class="file-preview" id="filePreview">
+                        <div class="file-info">
+                            <i class="fas fa-file-alt"></i>
+                            <span class="file-name" id="fileName"></span>
+                            <span class="file-size" id="fileSize"></span>
+                        </div>
+                        <button class="remove-file" id="removeFile">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- تبويب الرابط -->
+                <div class="tab-pane" id="urlTab">
+                    <div class="url-wrapper">
+                        <input type="url" id="urlInput" class="url-input" placeholder="https://example.com/article">
+                        <button class="fetch-btn" id="fetchBtn">
+                            <i class="fas fa-download"></i>
+                            <span>جلب</span>
+                        </button>
+                    </div>
+                    <div class="url-preview" id="urlPreview"></div>
+                </div>
+            </div>
+
+            <div class="card-footer">
+                <button class="analyze-btn" id="analyzeBtn">
+                    <i class="fas fa-magnifying-glass"></i>
+                    <span>تحليل النص</span>
+                    <div class="cost-badge">
+                        <i class="fas fa-coins"></i>
+                        <span>1 رصيد</span>
+                    </div>
+                </button>
+            </div>
+        </div>
+
+        <!-- رسالة نفاد الرصيد اليومي - تصميم فاخر جداً -->
+        <div class="daily-limit-message" id="dailyLimitMessage" style="display: none;">
+            <div class="message-container">
+                <!-- تأثيرات ضوئية -->
+                <div class="message-glow"></div>
+                <div class="message-particles"></div>
+                
+                <!-- أيقونة مميزة -->
+                <div class="message-icon">
+                    <div class="icon-wrapper">
+                        <i class="fas fa-hourglass-end"></i>
+                        <div class="icon-ring"></div>
+                        <div class="icon-ring-2"></div>
+                    </div>
+                </div>
+
+                <!-- العنوان الرئيسي -->
+                <h2 class="message-title">
+                    <span class="title-line">
+                        <i class="fas fa-bolt"></i>
+                        لقد نفذ رصيدك اليومي المجاني!
+                        <i class="fas fa-bolt"></i>
+                    </span>
+                </h2>
+
+                <!-- النص التوضيحي -->
+                <p class="message-description">
+                    استخدمت الـ <strong>5 تحاليل المجانية</strong> لهذا اليوم
+                </p>
+
+                <!-- عرض الباقة المميزة -->
+                <div class="premium-offer">
+                    <div class="offer-badge">
+                        <span class="badge-text">✨ عرض حصري للمستخدمين المميزين ✨</span>
+                    </div>
+
+                    <div class="offer-header">
+                        <div class="offer-icon">
+                            <i class="fas fa-infinity"></i>
+                        </div>
+                        <h3 class="offer-title">
+                            باقة غير محدودة
+                            <span class="infinite-badge">∞</span>
+                        </h3>
+                    </div>
+
+                    <div class="offer-price">
+                        <span class="currency">$</span>
+                        <span class="amount">10</span>
+                        <span class="period">فقط</span>
+                        <span class="old-price">$50</span>
+                    </div>
+
+                    <div class="offer-features">
+                        <div class="feature">
+                            <i class="fas fa-check-circle"></i>
+                            <span>تحاليل غير محدودة للأبد</span>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-check-circle"></i>
+                            <span>بدون حدود يومية</span>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-check-circle"></i>
+                            <span>دقة 99.9% مضمونة</span>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-check-circle"></i>
+                            <span>أولوية في المعالجة</span>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-check-circle"></i>
+                            <span>دعم فني VIP على تليجرام</span>
+                        </div>
+                    </div>
+
+                    <!-- زر التواصل مع المطور -->
+                    <div class="contact-developer">
+                        <p class="contact-text">
+                            <i class="fas fa-rocket"></i>
+                            للشحن والترقية تواصل مع المطور مباشرة
+                        </p>
+                        <a href="https://t.me/messi123459" class="telegram-btn" target="_blank">
+                            <i class="fab fa-telegram"></i>
+                            <span>@messi123459</span>
+                            <div class="btn-glow"></div>
+                        </a>
+                    </div>
+
+                    <!-- ضمان -->
+                    <div class="guarantee-badge">
+                        <i class="fas fa-shield-alt"></i>
+                        <span>ضمان استعادة الأموال خلال 7 أيام</span>
+                    </div>
+                </div>
+
+                <!-- زر التجربة المجانية (يختفي بعد النفاد) -->
+                <button class="try-again-btn" id="tryAgainBtn" style="display: none;">
+                    <i class="fas fa-redo-alt"></i>
+                    <span>حاول مرة أخرى غداً</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- بطاقة النتائج -->
+        <div class="results-card" id="resultsCard" style="display: none;">
+            <div class="results-header">
+                <h2 class="results-title">
+                    <i class="fas fa-chart-pie"></i>
+                    <span>نتيجة التحليل</span>
+                </h2>
+                <button class="share-results" id="shareResults">
+                    <i class="fas fa-share-alt"></i>
+                </button>
+            </div>
+            
+            <div class="results-body">
+                <!-- النتيجة الرئيسية -->
+                <div class="main-result">
+                    <div class="result-gauge" id="resultGauge">
+                        <div class="gauge-fill" id="gaugeFill"></div>
+                        <div class="gauge-value" id="gaugeValue">0%</div>
+                    </div>
+                    <div class="result-label" id="resultLabel">
+                        <i class="fas fa-robot"></i>
+                        <span>جاري التحليل...</span>
+                    </div>
+                </div>
+
+                <!-- مؤشرات الثقة -->
+                <div class="confidence-indicators">
+                    <div class="indicator">
+                        <span class="indicator-label">احتمال AI</span>
+                        <div class="indicator-bar">
+                            <div class="indicator-fill ai-fill" id="aiFill" style="width: 0%"></div>
+                        </div>
+                        <span class="indicator-value" id="aiValue">0%</span>
+                    </div>
+                    <div class="indicator">
+                        <span class="indicator-label">احتمال بشري</span>
+                        <div class="indicator-bar">
+                            <div class="indicator-fill human-fill" id="humanFill" style="width: 0%"></div>
+                        </div>
+                        <span class="indicator-value" id="humanValue">0%</span>
+                    </div>
+                </div>
+
+                <!-- تحليل تفصيلي -->
+                <div class="detailed-analysis">
+                    <h3>تحليل تفصيلي</h3>
+                    <div class="analysis-grid">
+                        <div class="analysis-item">
+                            <span class="item-name">التكرار</span>
+                            <div class="item-bar">
+                                <div class="bar-fill" id="repetitionBar" style="width: 0%"></div>
+                            </div>
+                            <span class="item-value" id="repetitionValue">0%</span>
+                        </div>
+                        <div class="analysis-item">
+                            <span class="item-name">السلاسة</span>
+                            <div class="item-bar">
+                                <div class="bar-fill" id="fluencyBar" style="width: 0%"></div>
+                            </div>
+                            <span class="item-value" id="fluencyValue">0%</span>
+                        </div>
+                        <div class="analysis-item">
+                            <span class="item-name">تنوع المفردات</span>
+                            <div class="item-bar">
+                                <div class="bar-fill" id="vocabularyBar" style="width: 0%"></div>
+                            </div>
+                            <span class="item-value" id="vocabularyValue">0%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="results-footer">
+                <button class="action-btn" id="copyResult">
+                    <i class="fas fa-copy"></i>
+                    <span>نسخ</span>
+                </button>
+                <button class="action-btn" id="newAnalysis">
+                    <i class="fas fa-redo-alt"></i>
+                    <span>تحليل جديد</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- بطاقة الإحصائيات المتقدمة -->
+        <div class="stats-card" id="statsCard">
+            <div class="stats-header">
+                <h3><i class="fas fa-chart-gantt"></i> إحصائيات متقدمة</h3>
+            </div>
+            <div class="stats-grid">
+                <div class="stat-block">
+                    <i class="fas fa-text-height"></i>
+                    <span class="stat-block-label">طول النص</span>
+                    <span class="stat-block-value" id="textLength">0</span>
+                </div>
+                <div class="stat-block">
+                    <i class="fas fa-paragraph"></i>
+                    <span class="stat-block-label">عدد الجمل</span>
+                    <span class="stat-block-value" id="sentenceCount">0</span>
+                </div>
+                <div class="stat-block">
+                    <i class="fas fa-clock"></i>
+                    <span class="stat-block-label">وقت القراءة</span>
+                    <span class="stat-block-value" id="readingTime">0</span>
+                </div>
+                <div class="stat-block">
+                    <i class="fas fa-brain"></i>
+                    <span class="stat-block-label">مستوى التعقيد</span>
+                    <span class="stat-block-value" id="complexityLevel">متوسط</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- بطاقة تاريخ التحاليل -->
+        <div class="history-card">
+            <div class="history-header">
+                <h3><i class="fas fa-clock-rotate-left"></i> آخر التحاليل</h3>
+                <button class="clear-history" id="clearHistory">
+                    <i class="fas fa-trash-can"></i>
+                </button>
+            </div>
+            <div class="history-list" id="historyList">
+                <!-- تضاف العناصر هنا عبر JavaScript -->
+            </div>
+        </div>
+
+        <!-- التذييل -->
+        <footer class="main-footer">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="programmer-info">
+                        <span class="info-label">المبرمج</span>
+                        <a href="https://t.me/messi123459" class="programmer-link" target="_blank">
+                            <i class="fab fa-telegram"></i>
+                            <span>@messi123459</span>
+                        </a>
+                    </div>
+                    <div class="copyright">
+                        <span>© 2026 AI DETECTOR PRO</span>
+                        <span class="divider">|</span>
+                        <span>جميع الحقوق محفوظة</span>
+                    </div>
+                </div>
+
+                <div class="footer-section">
+                    <div class="legal-warning">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <span>تحذير: استخدام هذه الأداة لأغراض غير قانونية يعرضك للمساءلة</span>
+                    </div>
+                </div>
+
+                <div class="footer-section">
+                    <div class="footer-links">
+                        <a href="#">سياسة الخصوصية</a>
+                        <a href="#">الشروط والأحكام</a>
+                        <a href="#">اتصل بنا</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- مؤشر التحميل -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+        <p>جاري تحليل النص...</p>
+    </div>
+
+    <!-- نافذة الإشعارات -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- السكريبتات -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/balance.js"></script>
+    <script src="js/analyzer.js"></script>
+    <script>
+        // تهيئة AOS
+        AOS.init({
+            once: true,
+            mirror: false
+        });
+    </script>
+</body>
+</html>
